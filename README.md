@@ -42,3 +42,31 @@ Imprime una muestra JSON por linea. `--samples` debe ser un entero positivo
 (por defecto 10); `--interval` indica segundos entre muestras (por defecto 1,
 0 para generar sin espera). `--seed` es opcional y reproduce los valores de
 las variables; los timestamps siguen el reloj actual en UTC.
+
+## Telemetria MQTT
+
+Con Mosquitto escuchando en `localhost:1883`, ejecutar desde la raiz del
+repositorio en dos terminales PowerShell. Primero iniciar el subscriber:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.messaging.subscriber --expected-messages 10
+```
+
+Esperar el mensaje `Suscripto` y ejecutar el publisher en la otra terminal:
+
+```powershell
+.\.venv\Scripts\python.exe -m src.messaging.publisher --samples 10 --interval 1 --seed 42
+```
+
+Ambos usan el topic `industrial/station01/pump/P101/telemetry`. Leen `.env`
+(opcional, ver `.env.example`) y las variables de entorno. Los argumentos
+`--host`, `--port`, `--topic` (topic completo) y `--qos` tienen prioridad.
+El subscriber guarda cada mensaje valido, incluidos duplicados, en un CSV
+unico dentro de `results/raw/`. Imprime un resumen al terminar; omitir
+`--expected-messages` para recibir hasta Ctrl+C.
+
+Ejecutar todos los tests, sin necesitar un broker:
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_cache/mqtt-telemetry-tmp
+```
