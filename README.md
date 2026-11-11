@@ -70,3 +70,18 @@ Ejecutar todos los tests, sin necesitar un broker:
 ```powershell
 .\.venv\Scripts\python.exe -m pytest -q --basetemp=.pytest_cache/mqtt-telemetry-tmp
 ```
+
+## Analisis del experimento QoS
+
+Con los CSV reales nombrados como `qos0_run1_500msg_seed42.csv` y
+`qos1_run1_500msg_seed42.csv` (corridas 1, 2 y 3), ejecutar desde la raiz:
+
+```powershell
+.\.venv\Scripts\python.exe -m experiments.qos.analyze "results/raw/qos[01]_run[123]_500msg_seed42.csv" --expected-messages 500
+```
+
+Acepta tambien una o varias rutas CSV individuales. QoS y corrida se leen
+del nombre; el rango esperado es `1..N` (`--expected-messages`, por defecto
+500). Genera `qos_runs_*.csv` por corrida y `qos_aggregate_*.csv` por QoS en
+`results/processed/`, sin sobrescribir informes anteriores. Para cambiar
+el destino, usar `--output-dir`.
