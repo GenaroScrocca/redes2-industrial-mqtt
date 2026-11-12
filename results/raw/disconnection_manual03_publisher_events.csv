@@ -1,0 +1,7 @@
+timestamp,unix_ns,role,event,detail,qos,topic
+2026-11-12T00:47:42.551217+00:00,1794444462551217900,publisher,CONNECT_ATTEMPT,,1,industrial/station01/pump/P101/telemetry
+2026-11-12T00:47:42.571937+00:00,1794444462571937700,publisher,CONNECTED,,1,industrial/station01/pump/P101/telemetry
+2026-11-12T00:48:09.473971+00:00,1794444489473971900,publisher,DISCONNECTED,Unspecified error,1,industrial/station01/pump/P101/telemetry
+2026-11-12T00:48:10.474406+00:00,1794444490474406400,publisher,RECONNECT_ATTEMPT,,1,industrial/station01/pump/P101/telemetry
+2026-11-12T00:48:15.499998+00:00,1794444495499998700,publisher,RECONNECT_ATTEMPT,,1,industrial/station01/pump/P101/telemetry
+2026-11-12T00:48:19.052935+00:00,1794444499052935100,publisher,RECONNECTED,,1,industrial/station01/pump/P101/telemetry
