@@ -132,3 +132,27 @@ Analizar los tres CSV de esta ejecucion:
 Genera `disconnection_summary_*.csv` en `results/processed/`. Las columnas de
 tiempos describen la primera interrupcion; `interruptions` conserva todas
 las interrupciones observadas en formato JSON.
+
+## Dashboard Streamlit
+
+Verificar que Mosquitto este iniciado en `localhost:1883`. Desde la raiz del
+repositorio, activar el entorno y ejecutar:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+streamlit run dashboard/app.py
+```
+
+Abrir `http://localhost:8501` y presionar **INICIAR FLUJO**. La aplicacion
+inicia su propio publisher y subscriber; no hace falta ejecutar otros clientes.
+Los valores y graficos provienen exclusivamente de mensajes MQTT recibidos
+para esa demo, sin leer CSV. Por defecto usa QoS 1 e intervalo de 0.5 segundos.
+Host, puerto y topic se pueden revisar en Configuracion avanzada (lee `.env`).
+
+**DETENER** cierra los workers y conserva la ultima telemetria. **RESET** detiene
+el flujo, limpia datos y contadores y deja la bomba en STOPPED. Cada nuevo inicio
+crea una adquisicion nueva. Si el broker cae, se muestra **BROKER OFFLINE** y
+se reintenta la conexion automaticamente; el dashboard no controla Mosquitto.
+La ventana de graficos y deteccion de IDs duplicados esta limitada a 200 mensajes.
+La latencia media corresponde a la adquisicion; el p95 usa la ventana reciente
+cuando hay al menos 20 mensajes.
